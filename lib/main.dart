@@ -7,7 +7,8 @@ import '../pages/motherboardpage.dart';
 import '../pages/powersupplypage.dart';
 import '../pages/storagepage.dart';
 import '../pages/casepage.dart';
-
+import '../models/cpu.dart';
+import '../models/gpu.dart';
 
 void main() => runApp(MyApp());
 
@@ -35,6 +36,14 @@ class PCBuilder extends StatefulWidget {
 
 class _PCBuilderState extends State<PCBuilder> {
 
+  ///Helpful sites
+  ///CPU World
+  ///
+  ///
+  ///
+
+
+
   List<Ui> hardwarepart_list = [
     Ui(
       hardware_name : 'CPU',
@@ -44,7 +53,7 @@ class _PCBuilderState extends State<PCBuilder> {
 
     Ui(
       hardware_name : 'GPU',
-      route : GPUPage(),
+      route : GPUPage(data: '',),
       icon : Icons.person,
     ),
 
@@ -56,13 +65,13 @@ class _PCBuilderState extends State<PCBuilder> {
 
     Ui(
       hardware_name : 'RAM',
-      route : RAMPage(),
+      route : RAMPage(data: '',),
       icon : Icons.person,
     ),
 
     Ui(
       hardware_name : 'Storage',
-      route : StoragePage(),
+      route : StoragePage(data: '',),
       icon : Icons.person,
     ),
 
@@ -74,11 +83,22 @@ class _PCBuilderState extends State<PCBuilder> {
 
     Ui(
       hardware_name : 'PowerSupply',
-      route : PowerSupplyPage(),
+      route : PowerSupplyPage(data: '',),
       icon : Icons.person,
     ),
-
   ];
+
+
+
+  Future<void> _navigateAndSave(BuildContext context, int index) async{
+    final result = await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => hardwarepart_list[index].route));
+    print(result);
+
+  }
+
+
 
 
 
@@ -86,7 +106,7 @@ class _PCBuilderState extends State<PCBuilder> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Hardware List"),
+        title: Text("Hardware List\t\t\t\t "),
       ),
 
       body: ListView.builder(
@@ -94,9 +114,9 @@ class _PCBuilderState extends State<PCBuilder> {
         itemBuilder: (BuildContext context, int index){
           return InkWell(
             onTap: (){
-              Navigator.push(context,
-              MaterialPageRoute(builder: (context) => hardwarepart_list[index].route),
-              );
+
+              _navigateAndSave(context, index);
+
             },
 
             child: Padding(
@@ -112,6 +132,7 @@ class _PCBuilderState extends State<PCBuilder> {
                          hardwarepart_list[index].hardware_name,
                          style: TextStyle(fontSize: 20.0),
                        ),
+
                        SizedBox(height: 8.0),
                      ],
                    )
@@ -128,3 +149,38 @@ class _PCBuilderState extends State<PCBuilder> {
 
   }
 }
+
+
+// import 'package:http/http.dart' as http;
+// import 'dart:convert';
+//
+// class CpuModel {
+//   final String name;
+//   final String socket;
+//
+//   CpuModel({required this.name, required this.socket});
+//
+//   factory CpuModel.fromJson(Map<String, dynamic> json) {
+//     return CpuModel(
+//       name: json['name'],
+//       socket: json['socket'],
+//     );
+//   }
+// }
+//
+// // class CpuSearch {
+// //   static Future<CpuModel?> search(String query) async {
+// //     final response = await http.get(Uri.parse('https://www.cpu-world.com/api/search-api.php?search=${Uri.encodeComponent(query)}&fields=name,socket'));
+// //
+// //     if (response.statusCode == 200) {
+// //       final data = jsonDecode(response.body);
+// //       final results = List<Map<String, dynamic>>.from(data['result']);
+// //
+// //       final models = results.map((result) => CpuModel.fromJson(result)).toList();
+// //
+// //       return models.firstWhere((model) => model.name.toLowerCase().contains(query.toLowerCase()), orElse: () => null);
+// //     } else {
+// //       return null;
+// //     }
+// //   }
+// // }

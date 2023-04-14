@@ -5,6 +5,7 @@ class Ui{
   final Widget route;
   final IconData icon;
 
+
   Ui({
     required this.hardware_name,
     required this.route,

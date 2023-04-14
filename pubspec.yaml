@@ -29,8 +29,10 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  http: ^0.13.5
   flutter:
     sdk: flutter
+
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -89,3 +91,11 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  assets:
+    - assets/case.json
+    - assets/video-card.json
+    - assets/cpu.json
+    - assets/internal-hard-drive.json
+    - assets/memory.json
+    - assets/motherboard.json
+    - assets/power-supply.json
