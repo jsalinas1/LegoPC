@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import '../models/Ui.dart';
 import '../pages/cpupage.dart';
@@ -12,6 +13,7 @@ import '../models/gpu.dart';
 
 void main() => runApp(MyApp());
 
+enum hardware {CPU, GPU, Motherboard, RAM, Storage, Case, PowerSupply}
 
 
 
@@ -41,6 +43,9 @@ class _PCBuilderState extends State<PCBuilder> {
   ///
   ///
   ///
+  ///
+  ///
+
 
 
 
@@ -49,42 +54,49 @@ class _PCBuilderState extends State<PCBuilder> {
       hardware_name : 'CPU',
       route : CPUPage(),
       icon : Icons.person,
+      brand_name: 'None',
     ),
 
     Ui(
       hardware_name : 'GPU',
-      route : GPUPage(data: '',),
+      route : GPUPage(),
       icon : Icons.person,
+      brand_name: 'None',
     ),
 
     Ui(
       hardware_name : 'Motherboard',
       route : MotherboardPage(),
       icon : Icons.person,
+      brand_name: 'None',
     ),
 
     Ui(
       hardware_name : 'RAM',
       route : RAMPage(data: '',),
       icon : Icons.person,
+      brand_name: 'None',
     ),
 
     Ui(
       hardware_name : 'Storage',
       route : StoragePage(data: '',),
       icon : Icons.person,
+      brand_name: 'None',
     ),
 
     Ui(
       hardware_name : 'Case',
       route : CasePage(),
       icon : Icons.person,
+      brand_name: 'None',
     ),
 
     Ui(
       hardware_name : 'PowerSupply',
       route : PowerSupplyPage(data: '',),
       icon : Icons.person,
+      brand_name: 'None',
     ),
   ];
 
@@ -94,12 +106,21 @@ class _PCBuilderState extends State<PCBuilder> {
     final result = await Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => hardwarepart_list[index].route));
-    print(result);
+    //print(result);
+
+    ScaffoldMessenger.of(context)
+      ..removeCurrentSnackBar()
+      ..showSnackBar(SnackBar(content: Text('$result')));
+
+    if(result != null)
+      setState(() {
+        hardwarepart_list[index].setName('$result');
+      });
+
 
   }
 
-
-
+  int myReference = 0;
 
 
   @override
@@ -114,7 +135,7 @@ class _PCBuilderState extends State<PCBuilder> {
         itemBuilder: (BuildContext context, int index){
           return InkWell(
             onTap: (){
-
+              myReference = index;
               _navigateAndSave(context, index);
 
             },
@@ -124,7 +145,7 @@ class _PCBuilderState extends State<PCBuilder> {
                 child: Row(
                  children: [
                   Icon(hardwarepart_list[index].icon),
-                   SizedBox(width : 16.0),
+                   SizedBox(width : 14.0),
                    Column(
                      crossAxisAlignment: CrossAxisAlignment.start,
                      children: [
@@ -132,6 +153,30 @@ class _PCBuilderState extends State<PCBuilder> {
                          hardwarepart_list[index].hardware_name,
                          style: TextStyle(fontSize: 20.0),
                        ),
+
+                       // Text(
+                       //   hardwarepart_list[index].getName(),
+                       //   style: TextStyle(fontSize: 20.0),
+                       // ),
+
+                       SingleChildScrollView(
+                         child: Text(
+                           'WhATTTTTTTTTTTTTTTTTTTTTTTTTdsdsTT',
+                           style: TextStyle(fontSize: 20),
+                         ),
+
+
+                       ),
+
+                       AutoSizeText(
+                         hardwarepart_list[index].getName(),
+                         style: TextStyle(fontSize: 14.0),
+                         maxLines: 1,
+                         minFontSize: 10,
+                       ),
+
+
+
 
                        SizedBox(height: 8.0),
                      ],

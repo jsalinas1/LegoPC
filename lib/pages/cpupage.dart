@@ -33,13 +33,21 @@ class CPUHPage extends State<CPUPage> {
     final result = await Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => CPUInfo(data: chosenOne)));
-
+    save_Data = "$result";
+   // ScaffoldMessenger.of(context)
+     // ..removeCurrentSnackBar()
+      //..showSnackBar(SnackBar(content: Text(save_Data)));
+    if(result != null) Navigator.pop(context, "$result");
 
   }
 
+  String save_Data = "";
 
 
   late TextEditingController _controller = TextEditingController();
+
+
+
 
 
   @override
@@ -91,9 +99,13 @@ class CPUHPage extends State<CPUPage> {
                     return InkWell(
                       onTap: (){
                         Map<String, dynamic> chosenData = _controller!.text.isEmpty ? _items[index] : searchItem[index];
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => CPUInfo(data : chosenData)));
+                        //Navigator.push(
+                           // context,
+                           // MaterialPageRoute(builder: (context) => CPUInfo(data : chosenData)));
+                        _navigateAndSave(context, chosenData);
+
+
+
 
                         //_navigateAndSave(context, chosenData);
                       },
@@ -186,7 +198,7 @@ class CPUInfo extends StatelessWidget{
               icon: const Icon(Icons.add_circle),
               color: Colors.green,
               onPressed: (){
-                Navigator.pop(context, );
+                Navigator.pop(context, data['name']);
               },
             ),
           ],
