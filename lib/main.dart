@@ -1,15 +1,6 @@
-import 'package:auto_size_text/auto_size_text.dart';
+
 import 'package:flutter/material.dart';
-import '../models/Ui.dart';
-import '../pages/cpupage.dart';
-import '../pages/gpupage.dart';
-import '../pages/rampage.dart';
-import '../pages/motherboardpage.dart';
-import '../pages/powersupplypage.dart';
-import '../pages/storagepage.dart';
-import '../pages/casepage.dart';
-import '../models/cpu.dart';
-import '../models/gpu.dart';
+import '../pages/buildpcpage.dart';
 
 void main() => runApp(MyApp());
 
@@ -22,164 +13,138 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: Text("PC Builders"),
+        body: HomePage(),
+        )//PCBuilder(), // Test
 
-        ),
-        body: PCBuilder(), // Test
-      ),
     );
   }
 }
 
-class PCBuilder extends StatefulWidget {
-  @override
-  _PCBuilderState createState() => _PCBuilderState();
-}
-
-class _PCBuilderState extends State<PCBuilder> {
-
-  ///Helpful sites
-  ///CPU World
-  ///
-  ///
-  ///
-  ///
-  ///
-
-
-
-
-  List<Ui> hardwarepart_list = [
-    Ui(
-      hardware_name : 'CPU',
-      route : CPUPage(),
-      icon : Icons.person,
-      brand_name: 'None',
-    ),
-
-    Ui(
-      hardware_name : 'GPU',
-      route : GPUPage(),
-      icon : Icons.person,
-      brand_name: 'None',
-    ),
-
-    Ui(
-      hardware_name : 'Motherboard',
-      route : MotherBoardPage(),
-      icon : Icons.person,
-      brand_name: 'None',
-    ),
-
-    Ui(
-      hardware_name : 'RAM',
-      route : RAMPage(),
-      icon : Icons.person,
-      brand_name: 'None',
-    ),
-
-    Ui(
-      hardware_name : 'Storage',
-      route : StoragePage(),
-      icon : Icons.person,
-      brand_name: 'None',
-    ),
-
-    Ui(
-      hardware_name : 'Case',
-      route : CasePage(),
-      icon : Icons.person,
-      brand_name: 'None',
-    ),
-
-    Ui(
-      hardware_name : 'PowerSupply',
-      route : PowerSupplyPage(),
-      icon : Icons.person,
-      brand_name: 'None',
-    ),
-  ];
-
-
-
-  Future<void> _navigateAndSave(BuildContext context, int index) async{
-    final result = await Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => hardwarepart_list[index].route));
-    //print(result);
-
-    // ScaffoldMessenger.of(context)
-    //   ..removeCurrentSnackBar()
-    //   ..showSnackBar(SnackBar(content: Text('$result')));
-
-    if(result != null)
-      setState(() {
-        hardwarepart_list[index].setName('$result');
-      });
-
-
-  }
-
-  int myReference = 0;
-
-
+class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Hardware List\t\t\t\t "),
+        title: Text('Lego PC Builder'),
       ),
-
-      body: ListView.builder(
-        itemCount: hardwarepart_list.length,
-        itemBuilder: (BuildContext context, int index){
-          return InkWell(
-            onTap: (){
-              myReference = index;
-              _navigateAndSave(context, index);
-
-            },
-
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-                child: Row(
-                 children: [
-                  Icon(hardwarepart_list[index].icon),
-                   SizedBox(width : 14.0),
-                   Column(
-                     crossAxisAlignment: CrossAxisAlignment.start,
-                     children: [
-                       Text(
-                         hardwarepart_list[index].hardware_name,
-                         style: TextStyle(fontSize: 20.0),
-                       ),
-
-
-                       AutoSizeText(
-                         hardwarepart_list[index].getName(),
-                         style: TextStyle(fontSize: 14.0),
-                         maxLines: 1,
-                         minFontSize: 10,
-                       ),
-
-
-                       SizedBox(height: 8.0),
-                     ],
-                   )
-                 ],
-              )
+      body: Container(
+        padding: EdgeInsets.all(16.0),
+        child: GridView.count(
+          crossAxisCount: 2,
+          mainAxisSpacing: 16.0,
+          crossAxisSpacing: 16.0,
+          children: <Widget>[
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => PCBuilder()));
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.shade500,
+                      offset: Offset(6,6),
+                      blurRadius: 15,
+                      spreadRadius: 4,
+                    ),
+                    BoxShadow(
+                      color: Colors.white,
+                      offset: Offset(-6,-6),
+                      blurRadius: 15,
+                      spreadRadius: 4,
+                    )
+                  ],
+                  color: Colors.blue,
+                ),
+                child: Center(
+                  child: Text(
+                    'Build your PC',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24.0,
+                    ),
+                  ),
+                ),
+              ),
             ),
-          );
-        },
-
-
-
-      )
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => PCBuilder()));
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.shade500,
+                      offset: Offset(6,6),
+                      blurRadius: 15,
+                      spreadRadius: 4,
+                    ),
+                    BoxShadow(
+                      color: Colors.white,
+                      offset: Offset(-6,-6),
+                      blurRadius: 15,
+                      spreadRadius: 4,
+                    )
+                  ],
+                  color: Colors.green,
+                ),
+                child: Center(
+                  child: Text(
+                    'Current Build',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24.0,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => PCBuilder()));
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.shade500,
+                      offset: Offset(6,6),
+                      blurRadius: 15,
+                      spreadRadius: 4,
+                    ),
+                    BoxShadow(
+                      color: Colors.white,
+                      offset: Offset(-6,-6),
+                      blurRadius: 15,
+                      spreadRadius: 4,
+                    )
+                  ],
+                  color: Colors.orange,
+                ),
+                child: Center(
+                  child: Text(
+                    'Search all parts',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24.0,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
-
   }
 }
+
+
+
 
 
 // import 'package:http/http.dart' as http;
