@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           title: Text("PC Builders"),
+
         ),
         body: PCBuilder(), // Test
       ),
@@ -66,21 +67,21 @@ class _PCBuilderState extends State<PCBuilder> {
 
     Ui(
       hardware_name : 'Motherboard',
-      route : MotherboardPage(),
+      route : MotherBoardPage(),
       icon : Icons.person,
       brand_name: 'None',
     ),
 
     Ui(
       hardware_name : 'RAM',
-      route : RAMPage(data: '',),
+      route : RAMPage(),
       icon : Icons.person,
       brand_name: 'None',
     ),
 
     Ui(
       hardware_name : 'Storage',
-      route : StoragePage(data: '',),
+      route : StoragePage(),
       icon : Icons.person,
       brand_name: 'None',
     ),
@@ -94,7 +95,7 @@ class _PCBuilderState extends State<PCBuilder> {
 
     Ui(
       hardware_name : 'PowerSupply',
-      route : PowerSupplyPage(data: '',),
+      route : PowerSupplyPage(),
       icon : Icons.person,
       brand_name: 'None',
     ),
@@ -108,9 +109,9 @@ class _PCBuilderState extends State<PCBuilder> {
         MaterialPageRoute(builder: (context) => hardwarepart_list[index].route));
     //print(result);
 
-    ScaffoldMessenger.of(context)
-      ..removeCurrentSnackBar()
-      ..showSnackBar(SnackBar(content: Text('$result')));
+    // ScaffoldMessenger.of(context)
+    //   ..removeCurrentSnackBar()
+    //   ..showSnackBar(SnackBar(content: Text('$result')));
 
     if(result != null)
       setState(() {
@@ -154,19 +155,6 @@ class _PCBuilderState extends State<PCBuilder> {
                          style: TextStyle(fontSize: 20.0),
                        ),
 
-                       // Text(
-                       //   hardwarepart_list[index].getName(),
-                       //   style: TextStyle(fontSize: 20.0),
-                       // ),
-
-                       SingleChildScrollView(
-                         child: Text(
-                           'WhATTTTTTTTTTTTTTTTTTTTTTTTTdsdsTT',
-                           style: TextStyle(fontSize: 20),
-                         ),
-
-
-                       ),
 
                        AutoSizeText(
                          hardwarepart_list[index].getName(),
@@ -174,8 +162,6 @@ class _PCBuilderState extends State<PCBuilder> {
                          maxLines: 1,
                          minFontSize: 10,
                        ),
-
-
 
 
                        SizedBox(height: 8.0),

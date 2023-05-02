@@ -158,7 +158,7 @@ class GPUInfo extends StatelessWidget{
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-
+//"memory": "12 GB", "core_clock": "1320 MHz", "boost_clock": "1882 MHz"
               Text(
                 "Product Name: ${data['name']}",
                 style: TextStyle(fontSize: CPUInfoTextSize),
@@ -172,7 +172,25 @@ class GPUInfo extends StatelessWidget{
               SizedBox(width: 12, height: 20,),
 
               Text(
-                "Chipset: ${data['price_usd'] == null ? 0 : data['price_usd']}",
+                "Memory: ${data['memory']}",
+                style: TextStyle(fontSize: CPUInfoTextSize),
+              ),
+              SizedBox(width: 12, height: 20,),
+
+              Text(
+                "Core clock: ${data['core_clock']}",
+                style: TextStyle(fontSize: CPUInfoTextSize),
+              ),
+              SizedBox(width: 12, height: 20,),
+
+              Text(
+                "Boost Clock: ${data['boost_clock']}",
+                style: TextStyle(fontSize: CPUInfoTextSize),
+              ),
+              SizedBox(width: 12, height: 20,),
+
+              Text(
+                "Price: ${data['price_usd'] == null ? 'Out of stock' : data['price_usd']}",
                 style: TextStyle(fontSize: CPUInfoTextSize),
               ),
               SizedBox(width: 12, height: 20,),
