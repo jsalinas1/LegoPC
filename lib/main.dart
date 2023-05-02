@@ -26,6 +26,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Lego PC Builder'),
+        automaticallyImplyLeading: false,
       ),
       body: Container(
         padding: EdgeInsets.all(16.0),
@@ -59,10 +60,10 @@ class HomePage extends StatelessWidget {
                 ),
                 child: Center(
                   child: Text(
-                    'Build your PC',
+                    'Create New Build',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 24.0,
+                      fontSize: 20.0,
                     ),
                   ),
                 ),
@@ -96,7 +97,7 @@ class HomePage extends StatelessWidget {
                     'Current Build',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 24.0,
+                      fontSize: 20.0,
                     ),
                   ),
                 ),
@@ -130,7 +131,7 @@ class HomePage extends StatelessWidget {
                     'Search all parts',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 24.0,
+                      fontSize: 20.0,
                     ),
                   ),
                 ),

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class Specs{
-  final String CPU;
-  final String GPU;
-  final String MotherBoard;
-  final String RAM;
-  final String Storage;
-  final String Case;
-  final String PowerSupply;
+  String CPU;
+  String GPU;
+  String MotherBoard;
+  String RAM;
+  String Storage;
+  String Case;
+  String PowerSupply;
 
   Specs({
     required this.CPU,
