@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "580027472570",
+    "project_id": "legopc-cb6db",
+    "storage_bucket": "legopc-cb6db.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:580027472570:android:65f7585ac19ac1271dc083",
+        "android_client_info": {
+          "package_name": "com.example.mobile_dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "580027472570-ph74553j079485dmqtv6qgq3avl6f91d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAaJ2I9ZJYmI_0PNoJUnrP8B2sz5QN-fzs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "580027472570-ph74553j079485dmqtv6qgq3avl6f91d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

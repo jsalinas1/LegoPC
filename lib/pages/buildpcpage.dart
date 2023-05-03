@@ -8,6 +8,7 @@ import '../pages/storagepage.dart';
 import '../pages/casepage.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'dart:convert';
 import '../models/specs.dart';
 
 enum hardware {CPU, GPU, Motherboard, RAM, Storage, Case, PowerSupply}
@@ -148,8 +149,12 @@ class _PCBuilderState extends State<PCBuilder> {
         if(!anyChanges)
           return true;
 
-        final shouldpop = await showMyDialog();
-        return shouldpop ?? false;
+        final shouldsave = await showMyDialog();
+
+        Navigator.pop(context, json.encode(specs.toJson()));
+        return new Future(() => false);
+
+
       },
       child: Scaffold(
           appBar: AppBar(

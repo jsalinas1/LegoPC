@@ -1,10 +1,17 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../pages/buildpcpage.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'dart:convert';
+import '../models/specs.dart';
+
 
 
 Future main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   runApp(MyApp());
 }
 
@@ -27,12 +34,48 @@ class MyApp extends StatelessWidget {
 class HomePage extends StatelessWidget {
 
   late TextEditingController _controller = TextEditingController();
+  String s = '';
+
+
+
+  Future createUser({required String docname, required String strJSON}) async{
+
+    final docUser = FirebaseFirestore.instance.collection('users').doc(docname);
+
+    final toJson = json.decode(strJSON);
+
+    print(toJson);
+
+    await docUser.set(toJson);
+
+  }
 
   @override
   Widget build(BuildContext context) {
 
-    void submit(){
+
+
+    Future<void> submit() async{
+      if(_controller.text.isEmpty) {
+        return; // Do nothing if user enter empty input, will work on later
+      }
+      s = _controller.text; /// Might run into a bug where s is null
       Navigator.of(context).pop();
+      _controller.clear();
+      print('I passed');
+      print(s);
+
+      final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => PCBuilder()));
+
+      // ScaffoldMessenger.of(context)
+      // ..removeCurrentSnackBar()
+      // ..showSnackBar(SnackBar(content: Text('${result}')));
+
+      if(result != null){
+        createUser(docname: s, strJSON: result);
+        print('Sent');
+      }
+
     }
 
     Future enterUserProf() => showDialog(
@@ -43,6 +86,7 @@ class HomePage extends StatelessWidget {
             autofocus: true,
             decoration: InputDecoration(
               hintText: 'Enter the name of this profile',
+              errorBorder: InputBorder.none,
             ),
             controller: _controller,
           ),
@@ -97,9 +141,8 @@ class HomePage extends StatelessWidget {
                         TextButton(
                           child: Text('SUBMIT'),
                           onPressed: (){
-                            Navigator.of(context).pop();
-                            print(_controller.text);
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => PCBuilder()));
+                            submit();
+
                             
                           },
 
@@ -107,7 +150,9 @@ class HomePage extends StatelessWidget {
                         TextButton(
                           child: Text('Cancel'),
                           onPressed: () {
+                            _controller.clear();
                             onPressed: Navigator.of(context).pop();
+
                           },
                         )
 
