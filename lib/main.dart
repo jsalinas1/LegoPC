@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../pages/buildpcpage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'dart:convert';
+import '../pages/build_list.dart';
 import '../models/specs.dart';
 
 
@@ -40,11 +41,12 @@ class HomePage extends StatelessWidget {
 
   Future createUser({required String docname, required String strJSON}) async{
 
+
+
     final docUser = FirebaseFirestore.instance.collection('users').doc(docname);
 
     final toJson = json.decode(strJSON);
 
-    print(toJson);
 
     await docUser.set(toJson);
 
@@ -195,7 +197,7 @@ class HomePage extends StatelessWidget {
             GestureDetector(
               onTap: () {
 
-                Navigator.push(context, MaterialPageRoute(builder: (context) => PCBuilder()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => BuildList()));
               },
               child: Container(
                 decoration: BoxDecoration(
