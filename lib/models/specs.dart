@@ -31,6 +31,18 @@ class Specs{
     );
   }
 
+  Map<String, dynamic> toJson(){
+    return{
+      'cpu' : CPU,
+      'gpu' : GPU,
+      'motherboard' : MotherBoard,
+      'ram' : RAM,
+      'storage' : Storage,
+      'case' : Case,
+      'powersupply' : PowerSupply,
+    };
+  }
+
 
 
 }

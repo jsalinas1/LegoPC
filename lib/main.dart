@@ -1,8 +1,12 @@
 
 import 'package:flutter/material.dart';
 import '../pages/buildpcpage.dart';
+import 'package:path_provider/path_provider.dart';
 
-void main() => runApp(MyApp());
+
+Future main() async{
+  runApp(MyApp());
+}
 
 enum hardware {CPU, GPU, Motherboard, RAM, Storage, Case, PowerSupply}
 
@@ -21,8 +25,47 @@ class MyApp extends StatelessWidget {
 }
 
 class HomePage extends StatelessWidget {
+
+  late TextEditingController _controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+
+    void submit(){
+      Navigator.of(context).pop();
+    }
+
+    Future enterUserProf() => showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Build Name Profile'),
+          content: TextField(
+            autofocus: true,
+            decoration: InputDecoration(
+              hintText: 'Enter the name of this profile',
+            ),
+            controller: _controller,
+          ),
+          actions: [
+            TextButton(
+              child: Text('SUBMIT'),
+              onPressed: submit,
+
+            ),
+
+            TextButton(
+              child: Text('Cancel'),
+              onPressed: () {},
+            )
+
+          ],
+        )
+    );
+
+
+
+
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Lego PC Builder'),
@@ -36,8 +79,43 @@ class HomePage extends StatelessWidget {
           crossAxisSpacing: 16.0,
           children: <Widget>[
             GestureDetector(
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => PCBuilder()));
+              onTap: () async {
+                //enterUserProf();
+                await showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: Text('Build Name Profile'),
+                      content: TextField(
+
+                        autofocus: true,
+                        decoration: InputDecoration(
+                          hintText: 'Enter the name of this profile',
+                        ),
+                        controller: _controller,
+                      ),
+                      actions: [
+                        TextButton(
+                          child: Text('SUBMIT'),
+                          onPressed: (){
+                            Navigator.of(context).pop();
+                            print(_controller.text);
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => PCBuilder()));
+                            
+                          },
+
+                        ),
+                        TextButton(
+                          child: Text('Cancel'),
+                          onPressed: () {
+                            onPressed: Navigator.of(context).pop();
+                          },
+                        )
+
+                      ],
+                    )
+                );
+
+                  ;
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -71,6 +149,7 @@ class HomePage extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
+
                 Navigator.push(context, MaterialPageRoute(builder: (context) => PCBuilder()));
               },
               child: Container(
