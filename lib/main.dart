@@ -6,12 +6,18 @@ import 'package:firebase_core/firebase_core.dart';
 import 'dart:convert';
 import '../pages/build_list.dart';
 import '../pages/searchhardpage.dart';
+import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 
 
 Future main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
+
+ ;
 
   runApp(MyApp());
 }
@@ -21,8 +27,16 @@ enum hardware {CPU, GPU, Motherboard, RAM, Storage, Case, PowerSupply}
 
 
 class MyApp extends StatelessWidget {
+
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
+
+
     return MaterialApp(
       home: Scaffold(
         body: HomePage(),
@@ -39,11 +53,34 @@ class HomePage extends StatelessWidget {
 
 
 
+  Future<String?> getCollectionName() async{
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? uniqueID = prefs.getString('uniqueId');
+    if(uniqueID == null){
+      final doc = FirebaseFirestore.instance.collection('users').doc();
+      uniqueID = doc.id;
+      prefs.setString('uniqueId', uniqueID);
+      await doc.set({
+        'buildname': 'Michael',
+        'age': 21,
+        'user_buildlist' : null,
+      });
+    }
+
+    return uniqueID;
+
+  }
+
+
+
   Future createUser({required String docname, required String strJSON}) async{
 
+    final user_doc_name = await getCollectionName();
+
+    final docUser = FirebaseFirestore.instance.collection('users').doc(user_doc_name as String?);
+    //final TdocUser = FirebaseFirestore.instance.collection('users').doc();
 
 
-    final docUser = FirebaseFirestore.instance.collection('users').doc();
 
     final toJson = json.decode(strJSON);
 

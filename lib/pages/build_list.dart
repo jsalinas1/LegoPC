@@ -89,6 +89,9 @@ class BuildListH extends State<BuildList>{
           }
           else if(snapshot.hasData) {
             final result = snapshot.data!.docs;
+           // final test = result.map((e) => e.id); // Cannot deal with this, security risk
+           // print(test);
+           // final test2 = result[]
             final t = result[0].data() as Map<String, dynamic>;
             final buildList = t['user_buildlist'] as List;
 
