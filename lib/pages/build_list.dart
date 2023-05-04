@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../pages/buildpcinfo.dart';
 import 'dart:convert';
 
@@ -20,6 +21,23 @@ class BuildListH extends State<BuildList>{
 
 
   CollectionReference rootNote = FirebaseFirestore.instance.collection("users");
+  String docID = 'WSLLmVYyp3P5OEM5dz6D';
+  static late String _docID;
+
+  @override
+  void initState() {
+    super.initState();
+    print('Initializing..');
+    _loadMyValue();
+  }
+
+  _loadMyValue() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _docID = prefs.getString('uniqueId') ?? "";
+    });
+  }
+
 
   Future<void> _navigateAndSave(BuildContext context, Specs spec, String docname, String buildname) async{
     final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => PCInfo(userSpec: spec,)));
@@ -33,7 +51,7 @@ class BuildListH extends State<BuildList>{
   Future createUser({required String docname, required String strJSON, required String buildname}) async{
 
 
-    final docUser = FirebaseFirestore.instance.collection('users').doc(docname);
+    final docUser = FirebaseFirestore.instance.collection('users').doc(docID);
     final myDoc = await docUser.get();
     List tags = myDoc.data()!['user_buildlist'];
     print(buildname);
@@ -71,7 +89,15 @@ class BuildListH extends State<BuildList>{
 
 
 
+
+
+
+
+
+
+
   Widget build(BuildContext context){
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -79,8 +105,8 @@ class BuildListH extends State<BuildList>{
         )
       ),
       body: StreamBuilder(
-        stream: rootNote.snapshots(),
-        builder: (context, snapshot){
+        stream: rootNote.doc(_docID).snapshots(),
+        builder: (context, snapshot) {
           if(snapshot.hasError){
             print('ERROR');
             return Center(
@@ -88,16 +114,10 @@ class BuildListH extends State<BuildList>{
             );
           }
           else if(snapshot.hasData) {
-            final result = snapshot.data!.docs;
-           // final test = result.map((e) => e.id); // Cannot deal with this, security risk
-           // print(test);
-           // final test2 = result[]
-            final t = result[0].data() as Map<String, dynamic>;
-            final buildList = t['user_buildlist'] as List;
-
+            final result = (snapshot.data?.data() as Map<String, dynamic>)['user_buildlist'] as List;
 
             return ListView.builder(
-              itemCount: buildList.length,
+              itemCount: result.length,//buildList.length,
               itemBuilder: (BuildContext context, int index){
                 return InkWell(
                   onTap: () async {
@@ -108,10 +128,11 @@ class BuildListH extends State<BuildList>{
                   //   final myList = myMap['user_buildlist'];
                   // //  print('Test: ${myList[0]}');
 
-                    Specs spec = Specs.fromJson(buildList[index]['build']);
+                    Specs spec = Specs.fromJson(result[index]['build']);
                     print(spec.CPU);
 
-                    _navigateAndSave(context, spec,result[0].id,buildList[index]['buildname']);
+                    _navigateAndSave(context, spec,docID,result[index]['buildname']);
+
                   },
                   child: Padding(
                       padding: const EdgeInsets.all(16.0),
@@ -123,7 +144,7 @@ class BuildListH extends State<BuildList>{
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children:[
                                 Text(
-                                  '${buildList[index]['buildname']}',//result[index].id,
+                                  '${result[index]['buildname']}',//result[index].id,
                                   style: TextStyle(fontSize: 20.0),
                                 ),
 

@@ -29,10 +29,6 @@ enum hardware {CPU, GPU, Motherboard, RAM, Storage, Case, PowerSupply}
 class MyApp extends StatelessWidget {
 
 
-
-
-
-
   @override
   Widget build(BuildContext context) {
 
