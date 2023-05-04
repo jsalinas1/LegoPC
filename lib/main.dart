@@ -43,12 +43,27 @@ class HomePage extends StatelessWidget {
 
 
 
-    final docUser = FirebaseFirestore.instance.collection('users').doc(docname);
+    final docUser = FirebaseFirestore.instance.collection('users').doc('VZQceP0wfJNVllCd3qgw');
 
     final toJson = json.decode(strJSON);
 
+    final myjson = {
+      'name' : 'Michael', // This one is important
+      'age' : 21,
+    };
 
-    await docUser.set(toJson);
+    //await docUser.set(myjson);
+
+    List<Map<String,dynamic>> t = [
+      {
+        'buildname' : docname,
+        'build' : toJson,
+      }
+    ];
+
+    await docUser.update({
+      'user_buildlist' : FieldValue.arrayUnion(t),
+    });
 
   }
 
