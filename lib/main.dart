@@ -5,7 +5,7 @@ import '../pages/buildpcpage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'dart:convert';
 import '../pages/build_list.dart';
-import '../models/specs.dart';
+import '../pages/searchhardpage.dart';
 
 
 
@@ -43,7 +43,7 @@ class HomePage extends StatelessWidget {
 
 
 
-    final docUser = FirebaseFirestore.instance.collection('users').doc('VZQceP0wfJNVllCd3qgw');
+    final docUser = FirebaseFirestore.instance.collection('users').doc();
 
     final toJson = json.decode(strJSON);
 
@@ -246,7 +246,7 @@ class HomePage extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => PCBuilder()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => SearchParts()));
               },
               child: Container(
                 decoration: BoxDecoration(
