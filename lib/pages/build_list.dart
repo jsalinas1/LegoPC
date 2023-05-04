@@ -16,18 +16,8 @@ class BuildList extends StatefulWidget{
 
 class BuildListH extends State<BuildList>{
 
-  Stream<List<Specs>> readUsers() => FirebaseFirestore.instance
-      .collection('users')
-      .snapshots()
-      .map((snapshot) =>
-      snapshot.docs.map((doc)=> Specs.fromJson(doc.data())).toList());
 
-  Future<void> readDocs() async{
-    QuerySnapshot result = await FirebaseFirestore.instance
-        .collection('users').get();
-    List<DocumentSnapshot> docs = result.docs;
-    print(docs[0].id);
-  }
+  CollectionReference rootNote = FirebaseFirestore.instance.collection("users");
 
   Widget build(BuildContext context){
     return Scaffold(
@@ -36,8 +26,8 @@ class BuildListH extends State<BuildList>{
           'Build list'
         )
       ),
-      body: StreamBuilder<List<Specs>>(
-        stream: readUsers(),
+      body: StreamBuilder(
+        stream: rootNote.snapshots(),
         builder: (context, snapshot){
           if(snapshot.hasError){
             print('ERROR');
@@ -46,12 +36,10 @@ class BuildListH extends State<BuildList>{
             );
           }
           else if(snapshot.hasData){
-            final users = snapshot.data!;
-            readDocs();
-
+            final result = snapshot.data!.docs;
 
             return ListView.builder(
-              itemCount: users.length,
+              itemCount: result.length,
               itemBuilder: (BuildContext context, int index){
                 return InkWell(
                   child: Padding(
@@ -64,7 +52,7 @@ class BuildListH extends State<BuildList>{
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children:[
                                 Text(
-                                  users[index].CPU,
+                                  result[index].id,
                                   style: TextStyle(fontSize: 20.0),
                                 ),
 
