@@ -150,7 +150,6 @@ class _PCBuilderState extends State<PCBuilder> {
           return true;
 
         final shouldsave = await showMyDialog();
-
         Navigator.pop(context, json.encode(specs.toJson()));
         return new Future(() => false);
 
