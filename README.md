@@ -1,10 +1,10 @@
-# mobile_dev
+# Lego PC
 
-A new Flutter project.
+A final project for CS4750 Mobile App Development class
 
-## Getting Started
+## Description
 
-This project is a starting point for a Flutter application.
+This application allows user to compare prices and choose computer components that is compatible for building PC workstation.
 
 A few resources to get you started if this is your first Flutter project:
 
