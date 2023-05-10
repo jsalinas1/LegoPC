@@ -6,11 +6,8 @@ A final project for CS4750 Mobile App Development class
 
 This application allows user to compare prices and choose computer components that is compatible for building PC workstation.
 
-A few resources to get you started if this is your first Flutter project:
+## Notes
+For each computer components data, they are not synced with its current pricing and new ones coming as of today, thus, each computer components brand are at MSRP price by default. The data are saved in local and it is updated as of January 1, 2020
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Future Updates
+Hopefully, this app will get UI design improvements as well as fetching accurate data for each component in order to give app-user a best experience.
